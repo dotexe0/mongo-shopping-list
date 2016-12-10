@@ -49,9 +49,8 @@ app.get('/items', function(req, res) {
 });
 
 app.post('/items', function(req, res) {
-    Item.create({
-        name: req.body.name
-    }, function(err, item) {
+    Item.create(
+      {name: req.body.name}, function(err, item) {
         if (err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
@@ -62,10 +61,9 @@ app.post('/items', function(req, res) {
 });
 
 app.put('/items/:id', function(req, res) {
-  Item.update({
-    id: req.params.id,
-    name: req.body.name
-  }, function(err, item) {
+  Item.update(
+    {_id: req.params.id },
+    {name: req.body.name}, function(err, item) {
     if (err) {
       return res.status(400).json({
         message: 'Item not found'
@@ -76,12 +74,11 @@ app.put('/items/:id', function(req, res) {
 });
 
 app.delete('/items/:id', function(req, res) {
-  Item.del({
-    id: req.params.id
-  }, function(err, item) {
+  Item.remove(
+    {_id: req.params.id}, function(err, item) {
     if (err) {
-      return res.status(404).json({
-        message: 'Item not found, cannot delete item that does not exist'
+      return res.status(500).json({
+        message: 'Internal Server Error. Cannot delete item that does not exist.'
       });
     }
     res.status(200).json(item);
