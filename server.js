@@ -58,9 +58,10 @@ app.post('/items', function(req, res) {
 });
 
 app.put('/items/:id', function(req, res) {
-  Item.update(
-    {_id: req.params.id },
-    {name: req.body.name}, function(err, item) {
+  Item.findOneAndUpdate(
+    {_id: req.params.id},
+    {name: req.body.name},
+    {upsert: true}, function(err, item) {
     if (err) {
       return res.status(400).json({
         message: 'Item not found'
@@ -71,8 +72,8 @@ app.put('/items/:id', function(req, res) {
 });
 
 app.delete('/items/:id', function(req, res) {
-  Item.remove(
-    {_id: req.params.id}, function(err, item) {
+  Item.findOneAndRemove(
+    {_id: req.params.id}, null, function(err, item) {
     if (err) {
       return res.status(500).json({
         message: 'Internal Server Error. Cannot delete item that does not exist.'
