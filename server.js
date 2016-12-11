@@ -73,7 +73,7 @@ app.put('/items/:id', function(req, res) {
 
 app.delete('/items/:id', function(req, res) {
   Item.findOneAndRemove(
-    {_id: req.params.id}, null, function(err, item) {
+    {_id: req.params.id}, {}, function(err, item) {
     if (err) {
       return res.status(500).json({
         message: 'Internal Server Error. Cannot delete item that does not exist.'
