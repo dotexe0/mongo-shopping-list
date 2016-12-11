@@ -32,9 +32,6 @@ if (require.main === module) {
     });
 };
 
-exports.app = app;
-exports.runServer = runServer;
-
 var Item = require('./models/item');
 
 app.get('/items', function(req, res) {
@@ -90,3 +87,6 @@ app.use('*', function(req, res) {
         message: 'Not Found'
     });
 });
+
+exports.app = app;
+exports.runServer = runServer;
